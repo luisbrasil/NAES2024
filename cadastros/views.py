@@ -50,7 +50,7 @@ class PessoaCreate(CreateView):
     model = Pessoa
     fields = [
         'nome_completo', 'nascimento', 'cpf', 'email',
-        'rede_social', 'salario', 'cidade',
+        'rede_social', 'cidade',
     ]
 
     def get_context_data(self, **kwargs):
@@ -65,7 +65,7 @@ class PessoaUpdate(UpdateView):
     model = Pessoa
     fields = [
         'nome_completo', 'nascimento', 'cpf', 'email',
-        'rede_social', 'salario', 'cidade',
+        'rede_social', 'cidade',
     ]
 
     def get_context_data(self, **kwargs):
