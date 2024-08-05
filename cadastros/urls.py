@@ -1,6 +1,6 @@
 from django.urls import path
 # Importe suas views
-from .views import CachorroCreate, CachorroDelete, CachorroList, CachorroUpdate, CidadeCreate, CidadeUpdate, CidadeDelete, CidadeList
+from .views import AdocaoCreate, AdocaoDelete, AdocaoList, CachorroCreate, CachorroDelete, CachorroList, CachorroUpdate, CidadeCreate, CidadeUpdate, CidadeDelete, CidadeList
 from .views import EstadoCreate, EstadoDelete, EstadoList, EstadoUpdate, RacaCreate, RacaDelete, RacaList, RacaUpdate
 from .views import PessoaCreate, PessoaUpdate, PessoaDelete, PessoaList
 
@@ -30,4 +30,8 @@ urlpatterns = [
     path('editar/cachorro/<int:pk>/', CachorroUpdate.as_view(), name='editar-cachorro'),
     path('excluir/cachorro/<int:pk>/', CachorroDelete.as_view(), name='excluir-cachorro'),
     path('listar/cachorro/', CachorroList.as_view(), name='listar-cachorro'),
+    
+    path('cadastrar/adocao/', AdocaoCreate.as_view(), name='cadastrar-adocao'),
+    path('excluir/adocao/<int:pk>/', AdocaoDelete.as_view(), name='excluir-adocao'),
+    path('listar/adocao/', AdocaoList.as_view(), name='listar-adocao'),
 ]

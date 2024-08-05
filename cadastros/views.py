@@ -1,4 +1,4 @@
-from .models import Cachorro, Cidade, Estado, Pessoa, Raca
+from .models import Adocao, Cachorro, Cidade, Estado, Pessoa, Raca
 
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.edit import DeleteView
@@ -187,3 +187,25 @@ class CachorroDelete(DeleteView):
 class CachorroList(ListView):
     template_name = 'list/cachorro.html'
     model = Cachorro
+    
+## Adoção
+class AdocaoCreate(CreateView):
+    template_name = 'form.html'
+    success_url = reverse_lazy('listar-adocao')
+    model = Adocao
+    fields = ['pessoa','cachorro']
+
+    def get_context_data(self, **kwargs):
+        dados = super().get_context_data(**kwargs)
+        dados['titulo'] = 'Cadastrar adoção'
+        return dados
+
+class AdocaoDelete(DeleteView):
+    template_name = 'form-excluir.html'
+    success_url = reverse_lazy('listar-adocao')
+    model = Adocao
+
+
+class AdocaoList(ListView):
+    template_name = 'list/adocao.html'
+    model = Adocao
