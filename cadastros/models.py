@@ -52,7 +52,6 @@ class Cachorro(models.Model):
     nome = models.CharField(max_length=100)
     raca = models.ForeignKey(Raca, on_delete=models.PROTECT)
     idade = models.IntegerField()
-    peso = models.DecimalField(decimal_places=2, max_digits=5)
     cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     adotado = models.BooleanField(default=False)
 

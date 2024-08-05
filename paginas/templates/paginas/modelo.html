@@ -74,8 +74,11 @@
                             </a>
                             <div class="collapse" id="collapseCadastrar" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{% url 'cadastrar-estado' %}">Estado</a>
                                     <a class="nav-link" href="{% url 'cadastrar-cidade' %}">Cidade</a>
                                     <a class="nav-link" href="{% url 'cadastrar-pessoa' %}">Pessoa</a>
+                                    <a class="nav-link" href="{% url 'cadastrar-raca' %}">Raça</a>
+                                    <a class="nav-link" href="{% url 'cadastrar-cachorro' %}">Cachorro</a>
                                 </nav>
                             </div>
                             
@@ -86,8 +89,11 @@
                             </a>
                             <div class="collapse" id="collapseListar" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{% url 'listar-estado' %}">Estado</a>
                                     <a class="nav-link" href="{% url 'listar-cidade' %}">Cidade</a>
                                     <a class="nav-link" href="{% url 'listar-pessoa' %}">Pessoa</a>
+                                    <a class="nav-link" href="{% url 'listar-raca' %}">Raça</a>
+                                    <a class="nav-link" href="{% url 'listar-cachorro' %}">Cachorro</a>
                                 </nav>
                             </div>
 
