@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
     "paginas.apps.PaginasConfig", # ativar app
     "cadastros.apps.CadastrosConfig", # Ativar app
+    "usuarios.apps.UsuariosConfig",
     
     "crispy_forms",
     "crispy_bootstrap5"
@@ -134,3 +136,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS= 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'login'
