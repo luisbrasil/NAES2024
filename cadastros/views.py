@@ -3,7 +3,7 @@ from .models import Adocao, Cachorro, Cidade, Estado, Pessoa, Raca
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
-
+from braces.views import GroupRequiredMixin
 from django.urls import reverse_lazy
 
 
@@ -31,10 +31,11 @@ class CidadeUpdate(UpdateView):
         return dados
 
 
-class CidadeDelete(DeleteView):
+class CidadeDelete(GroupRequiredMixin, DeleteView):
     template_name = 'form-excluir.html'
     success_url = reverse_lazy('listar-cidade')
     model = Cidade
+    group_required = ["Administrador"]
 
 
 class CidadeList(ListView):
@@ -74,10 +75,11 @@ class PessoaUpdate(UpdateView):
         return dados
 
 
-class PessoaDelete(DeleteView):
+class PessoaDelete(GroupRequiredMixin, DeleteView):
     template_name = 'form-excluir.html'
     success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
+    group_required = ["Administrador"]
 
 
 class PessoaList(ListView):

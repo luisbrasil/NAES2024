@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Estado(models.Model):
@@ -33,6 +34,8 @@ class Pessoa(models.Model):
     cadastrado_em = models.DateTimeField(auto_now_add=True)
     atualizado_em = models.DateTimeField(auto_now=True)
     cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
+    
+    cadastrado_por = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f"{self.nome_completo} ({self.cpf})"
