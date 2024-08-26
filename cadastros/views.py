@@ -3,11 +3,12 @@ from .models import Adocao, Cachorro, Cidade, Estado, Pessoa, Raca
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import GroupRequiredMixin
 from django.urls import reverse_lazy
 
 
-class CidadeCreate(CreateView):
+class CidadeCreate(LoginRequiredMixin, CreateView):
     template_name = 'form.html'
     success_url = reverse_lazy('listar-cidade')
     model = Cidade
@@ -19,7 +20,7 @@ class CidadeCreate(CreateView):
         return dados
 
 
-class CidadeUpdate(UpdateView):
+class CidadeUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'form.html'
     success_url = reverse_lazy('listar-cidade')
     model = Cidade
@@ -38,14 +39,14 @@ class CidadeDelete(GroupRequiredMixin, DeleteView):
     group_required = ["Administrador"]
 
 
-class CidadeList(ListView):
+class CidadeList(LoginRequiredMixin, ListView):
     template_name = 'list/cidade.html'
     model = Cidade
 
 ##############################################################
 
 
-class PessoaCreate(CreateView):
+class PessoaCreate(LoginRequiredMixin, CreateView):
     template_name = 'form.html'
     success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
@@ -53,6 +54,12 @@ class PessoaCreate(CreateView):
         'nome_completo', 'nascimento', 'cpf', 'email',
         'rede_social', 'cidade',
     ]
+    
+    def form_valid(self, form):
+        form.instance.cadastrado_por = self.request.user
+        url_sucesso = super().form_valid(form)
+
+        return url_sucesso
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
@@ -60,7 +67,7 @@ class PessoaCreate(CreateView):
         return dados
 
 
-class PessoaUpdate(UpdateView):
+class PessoaUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'form.html'
     success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
@@ -68,6 +75,14 @@ class PessoaUpdate(UpdateView):
         'nome_completo', 'nascimento', 'cpf', 'email',
         'rede_social', 'cidade',
     ]
+
+    def get_object(self):
+        pessoa = Pessoa.objects.get(
+            pk=self.kwargs["pk"],
+            # Além do id, faz um WHERE também com o usuário
+            cadastrado_por=self.request.user
+        )
+        return pessoa
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
@@ -82,12 +97,12 @@ class PessoaDelete(GroupRequiredMixin, DeleteView):
     group_required = ["Administrador"]
 
 
-class PessoaList(ListView):
+class PessoaList(LoginRequiredMixin, ListView):
     template_name = 'list/pessoa.html'
     model = Pessoa
 
 ## Estado
-class EstadoCreate(CreateView):
+class EstadoCreate(LoginRequiredMixin, CreateView):
     template_name = 'form.html'
     success_url = reverse_lazy('listar-estado')
     model = Estado
@@ -99,7 +114,7 @@ class EstadoCreate(CreateView):
         return dados
 
 
-class EstadoUpdate(UpdateView):
+class EstadoUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'form.html'
     success_url = reverse_lazy('listar-estado')
     model = Estado
@@ -111,18 +126,21 @@ class EstadoUpdate(UpdateView):
         return dados
 
 
-class EstadoDelete(DeleteView):
+class EstadoDelete(GroupRequiredMixin, DeleteView):
     template_name = 'form-excluir.html'
     success_url = reverse_lazy('listar-estado')
     model = Estado
+    group_required = ["Administrador"]
 
 
-class EstadoList(ListView):
+class EstadoList(LoginRequiredMixin, ListView):
     template_name = 'list/estado.html'
     model = Estado
     
 ## Raça
-class RacaCreate(CreateView):
+
+
+class RacaCreate(LoginRequiredMixin, CreateView):
     template_name = 'form.html'
     success_url = reverse_lazy('listar-raca')
     model = Raca
@@ -133,7 +151,7 @@ class RacaCreate(CreateView):
         dados['titulo'] = 'Cadastrar cachorro'
         return dados
 
-class RacaUpdate(UpdateView):
+class RacaUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'form.html'
     success_url = reverse_lazy('listar-raca')
     model = Raca
@@ -145,13 +163,13 @@ class RacaUpdate(UpdateView):
         return dados
 
 
-class RacaDelete(DeleteView):
+class RacaDelete(GroupRequiredMixin, DeleteView):
     template_name = 'form-excluir.html'
     success_url = reverse_lazy('listar-raca')
     model = Raca
+    group_required = ["Administrador"]
 
-
-class RacaList(ListView):
+class RacaList(LoginRequiredMixin, ListView):
     template_name = 'list/raca.html'
     model = Raca
     

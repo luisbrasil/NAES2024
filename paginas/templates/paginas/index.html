@@ -5,7 +5,21 @@
 {% block conteudo %}
 <h3>DogVille 🐶</h3>
 
-<h5>{{ titulo }}</h5>
+{% if not request.user.is_authenticated %}
+    <p>
+        Para acessar o sistema, faça o login.
+    </p>
+    <p>
+        <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+    </p>
+
+{% else %}
+
+    <p>
+        Olá, {{ request.user }}!
+    </p>
+
+{% endif %}
 
 <p>Permita que um cachorrinho encontre o seu lar.</p>
 {% endblock %}
