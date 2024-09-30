@@ -17,6 +17,24 @@
 
     <p>
         Olá, {{ request.user }}!
+
+        <h4>Estatísticas</h4>
+        <ul>
+            <li>Quantidade de cachorrinhos que já conseguiram um lar: {{ qtdeCachorrosAdotados }}</li>
+            <li>Quantidade de cachorrinhos que procurando um lar: {{ qtdeCachorrosDisponiveis }}</li>
+        </ul>
+
+        <h4>Alguns cachorrinhos para adoção</h4>
+        
+        <ul>
+            {% for c in cachorrosAleatorios %}
+                <li>{{ c.nome }}/{{c.raca }}</li>
+            {% empty %}
+                <li>Nenhum cachorrinho disponível</li>
+            {% endfor %}
+
+            {{ queryset }}
+        </ul>
     </p>
 
 {% endif %}
