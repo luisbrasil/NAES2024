@@ -28,11 +28,10 @@
         
         <ul>
             {% for c in cachorrosAleatorios %}
-                <li>{{ c.nome }}/{{c.raca }}</li>
+                <li>{{ c.nome }} - {{ c.raca }}</li>
             {% empty %}
-                <li>Nenhum cachorrinho disponível</li>
+                <li>Nenhum registro de cidade</li>
             {% endfor %}
-
             {{ queryset }}
         </ul>
     </p>
