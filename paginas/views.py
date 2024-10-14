@@ -15,7 +15,8 @@ class IndexView(TemplateView):
         
         cachorrinhos = Cachorro.objects.filter(adotado=False).order_by('nome'), 3
         if cachorrinhos:
-            context['cachorrosAleatorios'] = random.sample(cachorrinhos,3)
+            numero_cachorros = min(3, len(cachorrinhos))
+            context['cachorrosAleatorios'] = random.sample(list(cachorrinhos), numero_cachorros)
         
         return context
 

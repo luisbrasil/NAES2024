@@ -148,7 +148,7 @@ class RacaCreate(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
-        dados['titulo'] = 'Cadastrar cachorro'
+        dados['titulo'] = 'Cadastrar Raça'
         return dados
 
 class RacaUpdate(LoginRequiredMixin, UpdateView):
@@ -183,7 +183,7 @@ class CachorroCreate(CreateView):
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
-        dados['titulo'] = 'Cadastrar raça'
+        dados['titulo'] = 'Cadastrar Cachorro'
         return dados
 
 class CachorroUpdate(UpdateView):
@@ -194,7 +194,7 @@ class CachorroUpdate(UpdateView):
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
-        dados['titulo'] = 'Editar registro de Raça'
+        dados['titulo'] = 'Editar registro de Cachorro'
         return dados
 
 
