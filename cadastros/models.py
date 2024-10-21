@@ -57,6 +57,8 @@ class Cachorro(models.Model):
     idade = models.IntegerField()
     cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     adotado = models.BooleanField(default=False)
+    
+    cadastrado_por = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.nome

@@ -79,7 +79,6 @@ class PessoaUpdate(LoginRequiredMixin, UpdateView):
     def get_object(self):
         pessoa = Pessoa.objects.get(
             pk=self.kwargs["pk"],
-            # Além do id, faz um WHERE também com o usuário
             cadastrado_por=self.request.user
         )
         return pessoa
@@ -95,11 +94,22 @@ class PessoaDelete(GroupRequiredMixin, DeleteView):
     success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
     group_required = ["Administrador"]
+    
+    def get_object(self):
+        pessoa = Pessoa.objects.get(
+            pk=self.kwargs["pk"],
+            cadastrado_por=self.request.user
+        )
+        return pessoa
 
 
 class PessoaList(LoginRequiredMixin, ListView):
     template_name = 'list/pessoa.html'
     model = Pessoa
+    
+    def get_queryset(self):
+        query = Pessoa.objects.filter(cadastrado_por=self.request.user)
+        return query
 
 ## Estado
 class EstadoCreate(LoginRequiredMixin, CreateView):
@@ -180,6 +190,12 @@ class CachorroCreate(CreateView):
     success_url = reverse_lazy('listar-cachorro')
     model = Cachorro
     fields = ['nome','raca','idade','cidade']
+    
+    def form_valid(self, form):
+        form.instance.cadastrado_por = self.request.user
+        url_sucesso = super().form_valid(form)
+
+        return url_sucesso
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
@@ -191,6 +207,13 @@ class CachorroUpdate(UpdateView):
     success_url = reverse_lazy('listar-cachorro')
     model = Cachorro
     fields = ['nome','raca','idade','cidade','adotado']
+    
+    def get_object(self):
+        cachorro = Cachorro.objects.get(
+            pk=self.kwargs["pk"], 
+            cadastrado_por=self.request.user 
+        )
+        return cachorro
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
@@ -202,11 +225,22 @@ class CachorroDelete(DeleteView):
     template_name = 'form-excluir.html'
     success_url = reverse_lazy('listar-cachorro')
     model = Cachorro
+    
+    def get_object(self):
+        cachorro = Cachorro.objects.get(
+            pk=self.kwargs["pk"],
+            cadastrado_por=self.request.user
+        )
+        return cachorro
 
 
 class CachorroList(ListView):
     template_name = 'list/cachorro.html'
     model = Cachorro
+    
+    def get_queryset(self):
+        query = Cachorro.objects.filter(cadastrado_por=self.request.user)
+        return query
     
 ## Adoção
 class AdocaoCreate(CreateView):
