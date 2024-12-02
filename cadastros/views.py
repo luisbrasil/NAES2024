@@ -9,6 +9,9 @@ from django.urls import reverse_lazy
 
 from django.contrib.messages.views import SuccessMessageMixin
 
+from django_filters.views import FilterView
+from .filters import PessoaFilter
+
 
 class CidadeCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'form.html'
@@ -109,9 +112,12 @@ class PessoaDelete(GroupRequiredMixin, DeleteView):
         return pessoa
 
 
-class PessoaList(LoginRequiredMixin, ListView):
+class PessoaList(LoginRequiredMixin, FilterView):
     template_name = 'list/pessoa.html'
     model = Pessoa
+    paginate_by = 50
+    # Definir a classe criada no filters.py
+    filterset_class = PessoaFilter
     
     def get_queryset(self):
         query = Pessoa.objects.filter(cadastrado_por=self.request.user)
