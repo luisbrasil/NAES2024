@@ -52,6 +52,11 @@ class CidadeList(LoginRequiredMixin, ListView):
     template_name = 'list/cidade.html'
     model = Cidade
 
+    def get_queryset(self):
+        query = Cidade.objects.all()  # Consultando todas as cidades
+        query = query.select_related("estado")  # Carregar o estado junto
+        return query
+
 ##############################################################
 
 
@@ -251,9 +256,11 @@ class CachorroDelete(DeleteView):
 class CachorroList(ListView):
     template_name = 'list/cachorro.html'
     model = Cachorro
-    
+
     def get_queryset(self):
         query = Cachorro.objects.filter(cadastrado_por=self.request.user)
+        # Carregar raca e cidade junto
+        query = query.select_related("raca", "cidade")
         return query
     
 ## Adoção
@@ -277,3 +284,9 @@ class AdocaoDelete(DeleteView):
 class AdocaoList(ListView):
     template_name = 'list/adocao.html'
     model = Adocao
+
+    def get_queryset(self):
+        query = Adocao.objects.all()
+        # Carregar pessoa e cachorro junto
+        query = query.select_related("pessoa", "cachorro")
+        return query
