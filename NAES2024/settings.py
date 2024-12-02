@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from django.contrib.messages import constants as messages
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,8 +44,8 @@ INSTALLED_APPS = [
     "usuarios.apps.UsuariosConfig",
     
     "crispy_forms",
-    "crispy_bootstrap5"
-    
+    "crispy_bootstrap5",
+    "debug_toolbar"
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "NAES2024.urls"
@@ -140,3 +143,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
+
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
+
+# Configuração de mensagens de notificação
+MESSAGE_TAGS = {
+    messages.ERROR: "danger",
+}
