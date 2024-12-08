@@ -1,5 +1,7 @@
 {% extends "paginas/modelo.html" %}
 
+{% load static %}
+
 {% block conteudo %}
 <h3>
     Lista de <b>Cachorros</b>
@@ -7,7 +9,11 @@
 
 <hr>
 
-<table class="table table-striped">
+    {% include 'list/filter_form.html' %}
+
+<hr>
+
+<table class="table table-striped" id="table-lista">
     <thead>
         <th>Nome</th>
         <th>Raca</th>
@@ -52,3 +58,22 @@
 </table>
 
 {% endblock %}
+
+{% block scripts %}
+
+<link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#table-lista').DataTable({
+            paging: false,
+
+        });
+
+        $("input[name*=idade]").prop("type", "number");
+
+    });
+
+</script>
+
+{% endblock scripts %}

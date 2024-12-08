@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django_filters.views import FilterView
-from .filters import PessoaFilter
+from .filters import PessoaFilter, CachorroFilter
 
 
 class CidadeCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -253,9 +253,13 @@ class CachorroDelete(DeleteView):
         return cachorro
 
 
-class CachorroList(ListView):
+class CachorroList(LoginRequiredMixin, FilterView):
     template_name = 'list/cachorro.html'
     model = Cachorro
+    paginate_by = 50
+
+    # Definir a classe criada no filters.py
+    filterset_class = CachorroFilter
 
     def get_queryset(self):
         query = Cachorro.objects.filter(cadastrado_por=self.request.user)

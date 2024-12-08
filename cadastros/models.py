@@ -60,6 +60,9 @@ class Cachorro(models.Model):
     
     cadastrado_por = models.ForeignKey(User, on_delete=models.PROTECT)
 
+    class Meta:
+        ordering = ["nome"]
+
     def __str__(self):
         return self.nome
 
