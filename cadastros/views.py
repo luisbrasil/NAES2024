@@ -279,6 +279,15 @@ class AdocaoCreate(CreateView):
         dados['titulo'] = 'Cadastrar adoção'
         return dados
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        cachorro = form.instance.cachorro
+        cachorro.adotado = True
+        cachorro.save()
+
+        return response
+
 class AdocaoDelete(DeleteView):
     template_name = 'form-excluir.html'
     success_url = reverse_lazy('listar-adocao')
